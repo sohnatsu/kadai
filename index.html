@@ -36,16 +36,20 @@
                 '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P04-v3_0.html">国土数値情報 - 医療機関データ</a>',
             );
 
+
             // GeoJSONレイヤーを作成
             fetch('./P04-20_12.geojson') // 千葉県の医療機関データのGeoJSONを非同期読み込み
                 .then((res) => res.json())
                 .then((json) => {
                     // GeoJSONレイヤーを作成
-                    L.geoJSON(json)
-                        .bindPopup((layer) => layer.feature.properties.P04_002) // ポップアップで病院名を表示
-                        .addTo(map);
-                        .bindPopup((layer) => layer.feature.properties.P04_003) // ポップアップで住所を表示
-                        .addTo(map);
+                    L.geoJSON(json, {
+                        onEachFeature: function (feature, layer) {
+                            // ポップアップに病院名と住所を表示
+                            layer.bindPopup(
+                                `<b>${feature.properties.P04_002}</b><br>${feature.properties.P04_003}`
+                            );
+                        },
+                    }).addTo(map);
                 });
         </script>
     </body>
