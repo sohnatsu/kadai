@@ -44,9 +44,9 @@
                     // GeoJSONレイヤーを作成
                     L.geoJSON(json, {
                         onEachFeature: function (feature, layer) {
-                            // ポップアップに病院名と住所を表示
+                            // ポップアップに病院名と住所と科を表示
                             layer.bindPopup(
-                                `<b>${feature.properties.P04_002}</b><br>${feature.properties.P04_003}`
+                                `<b>${feature.properties.P04_002}</b><br>${feature.properties.P04_003}`<br>${feature.properties.P04_004}`
                             );
                         },
                     }).addTo(map);
